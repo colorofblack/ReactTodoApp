@@ -1,19 +1,16 @@
+import {useState} from 'react';
 interface EntryInputProps{
-    data?:string;
-    onSendInput: () => void;
+    onSendInput: (data:string) => string;
 }
 
-function EntryInput({onSendInput}:EntryInputProps){
-    console.log('Rendering EntryInput, onSendInput:', onSendInput); // Debug log
-
-    const handleButtonClick = ()=>{
-        console.log('Button clicked, calling onSendInput'); // Debug log
-
-        onSendInput();
+function EntryInput({onSendInput}:(EntryInputProps)){
+    const [inputValue, setInput] = useState<string>('');
+    const handleButtonClick = ()=>{      
+        onSendInput(inputValue);
     }
     return(
         <div className="inputField">
-            <input type="text" className="taskDescription"></input>
+            <input type="text" className="taskDescription" value={inputValue} onInput={e => setInput((e.target as HTMLInputElement).value)}></input>
             <input type="button" className="createTask" value="Create" onClick={handleButtonClick}></input>
         </div>
     );

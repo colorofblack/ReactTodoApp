@@ -7,10 +7,7 @@ function App() {
     <>
     <h1>React To Do Application</h1>
       <TaskView/>
-      <div>
-        <Task taskDescription="My first Task" taskDate="Tag.Monat.Jahr"></Task>
-      </div>
-    </>
+       </>
   )
 }
 
