@@ -7,20 +7,19 @@ function TaskView(){
 
     const handleOnClick = (data:string) => {
         setTasks([...taskList, data]);
-        console.log("clicked, received: "+taskList);
-
+        console.log(data);
+        //console.log("clicked, received: "+{taskList} +" List has length: "+{taskList});
         return data;
     };
-    console.log('Rendering TaskView, handleOnClick:', handleOnClick); // Debug log
+    //console.log('Rendering TaskView, handleOnClick:', handleOnClick); // Debug log
 
     return(
-        <div>
+        <div id="taskView">
             <EntryInput onSendInput={handleOnClick}/>        
             {
-                taskList.map((task) => ( 
-                    <Task taskDescription={task}></Task>
-                )
-                )
+                taskList.map((task, i:number) => ( 
+                    <Task key={i} taskId={200} taskDescription={task}></Task>
+                ))
             }
         </div>
     );
