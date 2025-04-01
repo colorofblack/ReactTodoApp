@@ -1,22 +1,21 @@
 import {useState} from 'react';
-import { TaskProps } from './Task';
+import { Task } from './TaskView';
 
 interface EntryInputProps{
-    onSendInput: (data:TaskProps) => void;
+    onSendInput: (data:Task) => void;
 }
 
-function EntryInput( {onSendInput} : (EntryInputProps) ){
+function TaskCreation( {onSendInput} : (EntryInputProps) ){
     const [inputValue, setInput] = useState<string>('Enter your task description');
     const [firstInteraction, setFirstInteraction] = useState<boolean>(true);
     
     const handleSubmit = (e:React.FormEvent)=>{   
         e.preventDefault();  
 
-        const taskData:TaskProps={
+        const taskData:Task={
             taskDescription: inputValue ,
             taskId:666,
             taskDate:"dayMonthYear",
-            completeTask : ()=>{}
         };
         
         onSendInput(taskData);
@@ -44,4 +43,4 @@ function EntryInput( {onSendInput} : (EntryInputProps) ){
     );
 }
 
-export default EntryInput;
+export default TaskCreation;

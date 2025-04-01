@@ -1,32 +1,23 @@
-import EntryInput from "./EntryInput";
-import {useState} from 'react';
-import Task from "./Task";
-import { TaskProps } from "./Task";
 
-function TaskView(){
-    const [taskList, setTasks] = useState<TaskProps[]>([]);
-
-    const handleOnClick = (data:TaskProps) => {
-        setTasks([...taskList, data]);
-        console.log(data);
-        return data;
-    };
-
-    const handleTaskComplete = (taskId:number) => {
-        console.log("Task Number "+taskId+" complete! Kill it with fire");
-    }
-
-    return(
-        <div id="taskView">
-            <EntryInput onSendInput={handleOnClick}/>        
-            {
-                taskList.map((task, i:number) => ( 
-                    <Task key={i} taskId={task.taskId} taskDescription={task.taskDescription} taskDate={task.taskDate} completeTask={handleTaskComplete}></Task>
-                ))
-            }
-        </div>
-    );
-
+interface TaskProps{
+    task:Task;
+    completeTask: (taskId:number) => void;
 }
-
+export interface Task{
+    taskId:number;
+    taskDescription:string;
+    taskDate?:string;
+}
+function TaskView({task, completeTask}:TaskProps ){    
+    const onTaskComplete = ()=>{
+        completeTask(task.taskId);
+    }
+    return(
+        <div className="taskItem">
+            <input type="checkbox" className="taskCheckbox" onChange={onTaskComplete}></input>
+            <div className="taskTitle">{task.taskDescription}</div>
+            <div className="taskDate">{task.taskDate}</div>
+        </div>
+    )
+}
 export default TaskView;
