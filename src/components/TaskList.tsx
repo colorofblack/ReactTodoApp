@@ -1,30 +1,49 @@
-import EntryInput from "./TaskCreation";
-import {useState} from 'react';
 import TaskView from "./TaskView";
 import { Task } from "./TaskView";
+import { useRef, useState } from "react";
 
-function TaskList(){
-    const [taskList, setTasks] = useState<Task[]>([]);
+interface TaskListProp{
+    taskList:Task[];
+    onTaskComplete: (taskId:number)=> void
+}
+function TaskList({taskList, onTaskComplete}:TaskListProp){
 
-    const handleOnClick = (data:Task) => {
-        setTasks([...taskList, data]);
-        console.log(data);
-        return data;
-    };
+    const [position, setPosition] = useState({x:0,y:0});
+
+    const moveDivs =()=>{
+        const newX = position.x + 100;
+        const newY = position.y +50;
+        setPosition({x:newX, y:newY});
+        console.log(position);
+    }
 
     const handleTaskComplete = (taskId:number) => {
-        console.log("Task Number "+taskId+" complete! Kill it with fire");
+        onTaskComplete(taskId);
+  
+    }
+    const taskElements = useRef<HTMLDivElement>(null);
+
+    if(taskElements){
+        const taskItems = taskElements.current?.querySelectorAll('div.taskView');
+        taskItems?.forEach((taskItem)=>{
+            const taskItemDiv = taskItem as HTMLDivElement;
+            taskItemDiv.style.transform = `translate(${position.x}px,${position.y}px`;
+            console.log(taskItem.getBoundingClientRect());
+        })
     }
 
     return(
-        <div id="taskView">
-            <EntryInput onSendInput={handleOnClick}/>        
+        <div id="taskList" ref={taskElements}>
+            <button onClick={moveDivs}>Move</button>
+
             {
-                taskList.map((taskItem, i:number) => ( 
-                    <TaskView key={i} task={taskItem} completeTask={handleTaskComplete}></TaskView>
+
+                taskList.map((taskItem:Task) => ( 
+                        <TaskView key={taskItem.taskId} task={taskItem} completeTask={handleTaskComplete}></TaskView>
                 ))
             }
         </div>
+
     );
 
 }
