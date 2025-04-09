@@ -29,8 +29,6 @@ body, html {
 
 }
 
-#listContainer{
-}
 
 
 h1 {
@@ -41,9 +39,11 @@ h1 {
   
 }
 
-.taskList {
-transition: all 250ms;
-  
+
+
+.taskListContainer{
+  position:relative;
+  background-color:red;
 }
 
 .taskView {
@@ -58,6 +58,9 @@ transition: all 250ms;
   opacity: 0%;
   overflow:hidden;
   margin-bottom:5px;
+  transition: all 250ms;
+  width:100%;
+  position:absolute;
 }
 .taskView:hover{
   border: 1px solid #fca311

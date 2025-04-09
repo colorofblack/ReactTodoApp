@@ -1,31 +1,19 @@
 import './App.css'
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import TaskList from './components/TaskList.tsx';
 import { Task } from './components/TaskView.tsx';
 import TaskCreation from './components/TaskCreation.tsx';
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
-
-  const onNewTaskCreation = (newTask:Task)=>{
-    //console.log(newTask);
-    setTasks([...tasks, newTask]);
+  
+  const onNewTaskCreation = (newTask:Task)=>
+  {
+    setTasks([ newTask, ...tasks,]);
   } 
 
-  const taskElements = useRef<HTMLDivElement>(null);
-
-  useEffect(() =>{
-    if(taskElements.current){
-      /*const taskItems = taskElements.current.querySelectorAll('div.taskItem');
-      taskItems.forEach((tI:any)=>{
-        console.log(tI.getBoundingClientRect().top);
-      })*/
-
-    }
-  })
-
-  const onTaskCompletion = (taskCompleteId:number)=>{
-    console.log("Task Number "+taskCompleteId+" complete! Kill it with fire");
+  const onTaskCompletion = (taskCompleteId:number)=>
+  {
     const temporaryTaskList = tasks.filter((task)=>{return task.taskId !== taskCompleteId})
     setTasks(temporaryTaskList);
   }
@@ -33,9 +21,9 @@ function App() {
   return (
     <div id="contentContainer">
       <h1>Just Do IT</h1>
-      <div id="listContainer" ref={taskElements}>
+      <div id="listContainer">
         <TaskCreation onSendInput = { onNewTaskCreation }/>
-        <TaskList onTaskComplete={onTaskCompletion} taskList={tasks}/>
+        <TaskList taskList={tasks} onTaskComplete={onTaskCompletion}/>
       </div>
     </div>
   )

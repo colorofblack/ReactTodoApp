@@ -11,14 +11,15 @@ function TaskCreation( {onSendInput} : (EntryInputProps) ){
 
     const handleSubmit = (e:React.FormEvent)=>{   
         e.preventDefault();
+        
         const addLeadingZero = (num:number) => num < 10 ? "0"+num.toString() : num.toString(); 
-  
         const date:Date = new Date();
         const currentDate:string = addLeadingZero( date.getDate() ) +"/" +addLeadingZero( date.getMonth() + 1 ) +"/" +date.getFullYear();
 
         const taskData:Task={
             taskDescription: inputValue ,
             taskId:Date.now(),
+            taskPosition:99,
             taskDate: currentDate,
             closed: false
         };
@@ -29,7 +30,7 @@ function TaskCreation( {onSendInput} : (EntryInputProps) ){
     }
 
     const handleFirstInput = ()=>{
-        if( firstInteraction ){
+        if ( firstInteraction ){
             //setInput('')
             setFirstInteraction(false);
         }
